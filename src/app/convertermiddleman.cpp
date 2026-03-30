@@ -13,6 +13,10 @@ string ConverterMiddleman::route(string tabName, string input, string fromUnit, 
             double finalTemp = tempConverter.fahrenheitToCelsius(temp);
             output = to_string(finalTemp);
         }
+        else if (fromUnit == "Celsius" && toUnit == "Fahrenheit") {
+            double finalTemp = tempConverter.celsiusToFahrenheit(temp);
+            output = to_string(finalTemp);
+        }
     }
 
     return output;
