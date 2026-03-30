@@ -1,0 +1,4 @@
+{
+    "temperature": ["Fahrenheit", "Celsius", "Kelvin"],
+    "kitchen": ["ounces", "pounds"]
+}

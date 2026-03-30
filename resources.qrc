@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/styles">
+        <file alias="light.qss">styles/light.qss</file>
+        <file alias="dark.qss">styles/dark.qss</file>
+    </qresource>
+    
+    <qresource prefix="/json">
+        <file alias="units">src/app/units.json</file>
+    </qresource>
+</RCC>
