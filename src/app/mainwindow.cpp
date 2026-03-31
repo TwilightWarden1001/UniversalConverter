@@ -148,5 +148,12 @@ void MainWindow::onButtonClicked()
     // 6. Call our router
     string text = router.route(tabString, inputString, fromString, toString);
 
+    // Basic error handling
+    if (text.substr(0, 6) == "ERROR:") {
+        QMessageBox::warning(this, "Invalid Input", QString::fromStdString(text));
+        return;
+    }
+
+    // 7. Write the result to the Line Edit
     result->setText(QString::fromStdString(text));
 }
