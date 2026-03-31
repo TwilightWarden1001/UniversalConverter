@@ -135,13 +135,7 @@ void MainWindow::onButtonClicked()
         QMessageBox::warning(this, "Null/Empty Input", "Input field cannot be empty.");   
         return;
     }
-
-    // Check if the units are the same
-    if (fromUnit == toUnit) {
-        result->setText(input);
-        return;
-    }
-
+    
     // 5. Create the ConverterMiddleman object
     ConverterMiddleman router;
 

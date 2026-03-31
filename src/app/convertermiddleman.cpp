@@ -14,6 +14,13 @@ string ConverterMiddleman::route(string tabName, string input, string fromUnit, 
         try {
             temp = stod(input);
 
+            // We have to do it IN here to make sure it doesn't display
+            // an invalid input BEFORE we have checked if the input is valid
+            if (fromUnit == toUnit) {
+                output = input;
+                return output;
+            }
+
             if (fromUnit == "Fahrenheit" && toUnit == "Celsius") {
                 double finalTemp = tempConverter.fahrenheitToCelsius(temp);
                 output = to_string(finalTemp);
@@ -39,10 +46,10 @@ string ConverterMiddleman::route(string tabName, string input, string fromUnit, 
                 output = to_string(finalTemp);
             }
         } catch (const std::invalid_argument& e) {
-            output = error_string.append("Please enter a valid number.");
+            output = error_string + "Please enter a valid number. Your number may include decimals but not letters.";
             return output;
         } catch (const std::out_of_range& e) {
-            output = error_string.append("Your number is too large.");
+            output = error_string + "Your number is too large. Please enter a smaller one";
             return output;
         }
     }
