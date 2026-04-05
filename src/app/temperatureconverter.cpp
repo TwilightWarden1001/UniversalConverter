@@ -1,33 +1,54 @@
 #include "temperatureconverter.h"
 
-double TemperatureConverter::fahrenheitToCelsius(double fahrenheit) {
-    double celsius = (fahrenheit - 32) / 1.8;
-    return celsius;
-}
-
-double TemperatureConverter::celsiusToFahrenheit(double celsius) {
-    double fahrenheit = (celsius * 1.8) + 32;
-    return fahrenheit;
-}
-
-double TemperatureConverter::kelvinToCelsius(double kelvin) {
-    double celsius = kelvin - 273.15;
-    return celsius;
+// Functions to go to Kelvin for our base unit
+double TemperatureConverter::fahrenheitToKelvin(double fahrenheit) {
+    double celsius = (fahrenheit - FAHRENHEIT_OFFSET) * SCALE_FACTOR;
+    return celsius + ABSOLUTE_ZERO_OFFSET;
 }
 
 double TemperatureConverter::celsiusToKelvin(double celsius) {
-    double kelvin = celsius + 273.15;
-    return kelvin;
+    return celsius + ABSOLUTE_ZERO_OFFSET;
 }
 
-double TemperatureConverter::fahrenheitToKelvin(double fahrenheit) {
-    double celsius = fahrenheitToCelsius(fahrenheit);
-    double kelvin = celsiusToKelvin(celsius);
-    return kelvin;
+double TemperatureConverter::rankineToKelvin(double rankine) { 
+    return rankine * SCALE_FACTOR;
 }
 
+// Functions to go from Kelvin back to the other units
 double TemperatureConverter::kelvinToFahrenheit(double kelvin) {
-    double celsius = kelvinToCelsius(kelvin);
-    double fahrenheit = celsiusToFahrenheit(celsius);
-    return fahrenheit;
+    double celsius = kelvin - ABSOLUTE_ZERO_OFFSET;
+    return celsius * INVERSE_SCALE_FACTOR + FAHRENHEIT_OFFSET;
+}
+
+double TemperatureConverter::kelvinToCelsius(double kelvin) {
+    return kelvin - ABSOLUTE_ZERO_OFFSET;
+}
+
+double TemperatureConverter::kelvinToRankine(double kelvin) {
+    return kelvin * INVERSE_SCALE_FACTOR;
+}
+
+double TemperatureConverter::convertTemperature(double temp, std::string fromUnit, std::string toUnit) {
+    // 1. Convert the temperature to kelvin
+    if (fromUnit == "Fahrenheit") {
+        temp = fahrenheitToKelvin(temp);
+    }
+    else if (fromUnit == "Celsius") {
+        temp = celsiusToKelvin(temp);
+    }
+    else if (fromUnit == "Rankine") {
+        temp = rankineToKelvin(temp);
+    } 
+
+    // 2. Convert the temperature to the unit we want
+    if (toUnit == "Fahrenheit") {
+        temp = kelvinToFahrenheit(temp);
+    }
+    else if (toUnit == "Celsius") {
+        temp = kelvinToCelsius(temp);
+    }
+    else if (toUnit == "Rankine") {
+        temp = kelvinToRankine(temp);
+    }
+    return temp;
 }
