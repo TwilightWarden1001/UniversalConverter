@@ -3,7 +3,7 @@ qt_add_executable(${PROJECT_NAME}
     mainwindow.cpp
     main.cpp
     convertermiddleman.cpp
-    temperatureconverter.cpp
+    temperature.cpp
     ${CMAKE_SOURCE_DIR}/resources.qrc
 )
 

@@ -1,5 +1,5 @@
 #include "convertermiddleman.h"
-#include "temperatureconverter.h"
+#include "temperature.h"
 #include <stdexcept>
 string error_string = "ERROR: ";
 

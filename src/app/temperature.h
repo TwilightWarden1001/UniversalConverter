@@ -1,5 +1,5 @@
-#ifndef TEMPERATURECONVERTER_H
-#define TEMPERATURECONVERTER_H
+#ifndef TEMPERATURE_H
+#define TEMPERATURE_H
 
 #include <string>
 

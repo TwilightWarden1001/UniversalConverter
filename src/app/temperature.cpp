@@ -1,4 +1,4 @@
-#include "temperatureconverter.h"
+#include "temperature.h"
 
 // Functions to go to Kelvin for our base unit
 double TemperatureConverter::fahrenheitToKelvin(double fahrenheit) {
