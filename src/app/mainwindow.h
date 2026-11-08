@@ -11,8 +11,7 @@
 #include <QString>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QJsonObject>
-#include <QJsonArray>
+#include <QSqlDatabase>
 
 class MainWindow : public QMainWindow 
 {
@@ -24,9 +23,9 @@ public:
     ~MainWindow();
 
 private:
+    QSqlDatabase units_DB_connection;
     QTabWidget* tabs;
-    QWidget* CreateTab(QJsonArray);
-    QJsonObject ReadJSON();
+    QWidget* CreateTab(std::string);
     void onButtonClicked();
 };
 #endif
