@@ -29,25 +29,23 @@ double TemperatureConverter::kelvinToRankine(double kelvin) {
 }
 
 double TemperatureConverter::convertTemperature(double temp, std::string fromUnit, std::string toUnit) {
-    // 1. Convert the temperature to kelvin
+    // Note if we start with kelvin, the TO functions will be ignored.
+    // If we END with kelvin the FROM functions will be ignored. 
+
+    // TO Kelvin
     if (fromUnit == "Fahrenheit") {
         temp = fahrenheitToKelvin(temp);
-    }
-    else if (fromUnit == "Celsius") {
+    } else if (fromUnit == "Celsius") {
         temp = celsiusToKelvin(temp);
-    }
-    else if (fromUnit == "Rankine") {
+    } else if (fromUnit == "Rankine") {
         temp = rankineToKelvin(temp);
     } 
-
-    // 2. Convert the temperature to the unit we want
+    // FROM Kelvin
     if (toUnit == "Fahrenheit") {
         temp = kelvinToFahrenheit(temp);
-    }
-    else if (toUnit == "Celsius") {
+    } else if (toUnit == "Celsius") {
         temp = kelvinToCelsius(temp);
-    }
-    else if (toUnit == "Rankine") {
+    } else if (toUnit == "Rankine") {
         temp = kelvinToRankine(temp);
     }
     return temp;

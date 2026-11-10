@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // 3. Create The Tabs
     tabs->addTab(CreateTab("temperature"), "Temperature");
+    tabs->addTab(CreateTab("distance"), "Distance");
 
     // 4. Set the Central Widget
     setCentralWidget(tabs);
@@ -65,6 +66,7 @@ QWidget* MainWindow::CreateTab(string tableName)
     QSqlQuery readUnits(units_DB_connection);
     if (readUnits.exec(queryText)) {
         while (readUnits.next()) {
+            qDebug() << readUnits.value(0) << readUnits.value(1) << readUnits.value(2);
             QString unit = readUnits.value("name").toString();
             unit1->addItem(unit);
             unit2->addItem(unit);
@@ -92,8 +94,9 @@ QWidget* MainWindow::CreateTab(string tableName)
     return tab;
 }
 
-void MainWindow::onButtonClicked() 
-{
+void MainWindow::onButtonClicked() {   
+    qDebug() << "Convert Button Clicked";
+
     // 1. Get the current tabs index, name and widget
     int index = tabs->currentIndex();
     QString tabName = tabs->tabText(index);
@@ -121,7 +124,7 @@ void MainWindow::onButtonClicked()
     
     // 5. Create the ConverterMiddleman object
     ConverterMiddleman router;
-
+    
     // 6. Call our router
     string text = router.route(tabString, inputString, fromString, toString);
 

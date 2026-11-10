@@ -4,6 +4,7 @@ qt_add_executable(${PROJECT_NAME}
     main.cpp
     convertermiddleman.cpp
     temperature.cpp
+    distance.cpp
     ${CMAKE_SOURCE_DIR}/resources.qrc
 )
 

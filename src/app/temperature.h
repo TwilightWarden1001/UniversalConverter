@@ -1,6 +1,5 @@
 #ifndef TEMPERATURE_H
 #define TEMPERATURE_H
-
 #include <string>
 
 class TemperatureConverter {
@@ -10,12 +9,13 @@ class TemperatureConverter {
         const double SCALE_FACTOR = 5.0 / 9.0;
         const double INVERSE_SCALE_FACTOR = 9.0 / 5.0;
     public:
-        // Functions to convert to Kelvin (chosen base unit)
+        // Base Unit: Kelvin
+        // Functions to convert TO Kelvin
         double fahrenheitToKelvin(double fahrenheit);
         double celsiusToKelvin(double celsius);
         double rankineToKelvin(double rankine);
         
-        // Functions to convert from Kelvin to the unit chosen
+        // Functions to convert FROM Kelvin
         double kelvinToFahrenheit(double kelvin);
         double kelvinToCelsius(double kelvin);
         double kelvinToRankine(double kelvin);

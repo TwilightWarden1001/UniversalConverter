@@ -8,6 +8,7 @@ class ConverterMiddleman {
 public:
     string route(string tab, string input, string fromUnit, string toUnit);
     string routeTemperature(string input, string fromUnit, string toUnit);
+    string routeDistance(string input, string fromUnit, string toUnit);
 };
 
 #endif
