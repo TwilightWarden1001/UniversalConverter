@@ -96,9 +96,9 @@ double DistanceConverter::convertDistance(double distance, std::string fromUnit,
     } else if (fromUnit == "Decimeter") {
         distance = decimetersToMeters(distance);
     } else if (fromUnit == "Decameter") {
-        distance = decimetersToMeters(distance);
+        distance = decametersToMeters(distance);
     } else if (fromUnit == "Hectometer") {
-        distance = decimetersToMeters(distance);
+        distance = hectometersToMeters(distance);
     } else if (fromUnit == "Kilometer") {
         distance = kilometersToMeters(distance);
     } else if (fromUnit == "Inch") {

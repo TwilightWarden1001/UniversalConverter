@@ -24,8 +24,11 @@ public:
 
 private:
     QSqlDatabase units_DB_connection;
-    QTabWidget* tabs;
-    QWidget* CreateTab(std::string);
-    void onButtonClicked();
+    QTabWidget* parentTabWidget;
+    QTabWidget* unitTabs;
+    QTabWidget* fileTabs;
+    QWidget* CreateTab(std::string, std::string);
+    void onUnitButtonClicked();
+    void onFileButtonClicked();
 };
 #endif

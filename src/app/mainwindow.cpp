@@ -12,8 +12,13 @@ using namespace std;
 // Constructor
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) 
 {
-    // 1. Initialize the tab widget
-    tabs = new QTabWidget(this);
+    // 1. Initialize the parent widget (QWidget)
+    parentTabWidget = new QTabWidget();
+    unitTabs = new QTabWidget();
+    fileTabs = new QTabWidget(); 
+    parentTabWidget->addTab(unitTabs, "Units");
+    parentTabWidget->addTab(fileTabs, "Files");
+    // Settings tab.
 
     // 2. Create the Database Connection
     units_DB_connection = QSqlDatabase::addDatabase("QSQLITE");
@@ -25,17 +30,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     }
 
     // 3. Create The Tabs
-    tabs->addTab(CreateTab("temperature"), "Temperature");
-    tabs->addTab(CreateTab("distance"), "Distance");
+    unitTabs->addTab(CreateTab("temperature", "Unit"), "Temperature");
+    unitTabs->addTab(CreateTab("distance", "Unit"), "Distance");
+    // fileTabs->addTab(CreateTab("pictures", "File"), "Pictures");
 
     // 4. Set the Central Widget
-    setCentralWidget(tabs);
+    setCentralWidget(parentTabWidget);
 }
 
 // Destructor
 MainWindow::~MainWindow() {}
 
-QWidget* MainWindow::CreateTab(string tableName) 
+
+
+QWidget* MainWindow::CreateTab(string tableName, string tabType) 
 {
     // 1. Create the tab
     QWidget *tab = new QWidget;
@@ -90,22 +98,32 @@ QWidget* MainWindow::CreateTab(string tableName)
     tab->setLayout(mainLayout);
 
     // 7. Connect the button and return the tab
-    connect(convertButton, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
+
+    if (tabType == "Unit") {
+        connect(convertButton, &QPushButton::clicked, this, &MainWindow::onUnitButtonClicked);
+    } else {
+        connect(convertButton, &QPushButton::clicked, this, &MainWindow::onFileButtonClicked);
+    }
     return tab;
 }
 
-void MainWindow::onButtonClicked() {   
-    qDebug() << "Convert Button Clicked";
+void MainWindow::onFileButtonClicked() {
+    qDebug() << "File Convert Button Clicked";
+    return;
+}
+
+void MainWindow::onUnitButtonClicked() {   
+    qDebug() << "Unit Convert Button Clicked";
 
     // 1. Get the current tabs index, name and widget
-    int index = tabs->currentIndex();
-    QString tabName = tabs->tabText(index);
-    QWidget* tab = tabs->widget(index);
+    int index = unitTabs->currentIndex();
+    QString tabName = unitTabs->tabText(index);
+    QWidget* tab = unitTabs->widget(index);
 
     // 2. Get the text from the two combo boxes and the user input
-    QString input = tab->findChild<QLineEdit*>("userInput")->text();
-    QString fromUnit = tab->findChild<QComboBox*>("fromBox")->currentText();
-    QString toUnit = tab->findChild<QComboBox*>("toBox")->currentText();
+    QString input = unitTabs->findChild<QLineEdit*>("userInput")->text();
+    QString fromUnit = unitTabs->findChild<QComboBox*>("fromBox")->currentText();
+    QString toUnit = unitTabs->findChild<QComboBox*>("toBox")->currentText();
 
     // 3. Convert the QStrings to normal strings
     string tabString = tabName.toStdString();
