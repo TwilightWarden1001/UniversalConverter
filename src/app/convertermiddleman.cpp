@@ -41,7 +41,7 @@ std::string ConverterMiddleman::routeDistance(std::string input, std::string fro
 
     try {
         // Attempt to convert the string to a double
-        distance = stod(input);
+        distance = std::stod(input);
         distance = distConverter.convertDistance(distance, fromUnit, toUnit);
         input = std::to_string(distance);
         return input;
