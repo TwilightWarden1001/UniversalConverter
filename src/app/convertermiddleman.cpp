@@ -2,11 +2,9 @@
 #include "temperature.h"
 #include "distance.h"
 #include <stdexcept>
-string error_string = "ERROR: ";
 
-string ConverterMiddleman::route(string tabName, string input, string fromUnit, string toUnit) 
-{
-    string output;
+std::string ConverterMiddleman::route(std::string tabName, std::string input, std::string fromUnit, std::string toUnit) {
+    std::string output;
 
     if (fromUnit == toUnit) {
         return input; // Edge case so that we don't waste time looking AND the functions don't have to deal with it
@@ -18,15 +16,15 @@ string ConverterMiddleman::route(string tabName, string input, string fromUnit, 
     return output;
 }
 
-string ConverterMiddleman::routeTemperature(string input, string fromUnit, string toUnit) { 
+std::string ConverterMiddleman::routeTemperature(std::string input, std::string fromUnit, std::string toUnit) { 
     TemperatureConverter tempConverter;
     double temp;
 
     try {
         // Attempt to convert the string to a double
-        temp = stod(input);
+        temp = std::stod(input);
         temp = tempConverter.convertTemperature(temp, fromUnit, toUnit);
-        input = to_string(temp);
+        input = std::to_string(temp);
         return input;
     } catch (const std::invalid_argument& e) {
         input = error_string + "Please enter a valid number. Your number may include decimals but not letters.";
@@ -37,7 +35,7 @@ string ConverterMiddleman::routeTemperature(string input, string fromUnit, strin
     }
 }
 
-string ConverterMiddleman::routeDistance(string input, string fromUnit, string toUnit) {
+std::string ConverterMiddleman::routeDistance(std::string input, std::string fromUnit, std::string toUnit) {
     DistanceConverter distConverter;
     double distance;
 
@@ -45,7 +43,7 @@ string ConverterMiddleman::routeDistance(string input, string fromUnit, string t
         // Attempt to convert the string to a double
         distance = stod(input);
         distance = distConverter.convertDistance(distance, fromUnit, toUnit);
-        input = to_string(distance);
+        input = std::to_string(distance);
         return input;
     } catch (const std::invalid_argument& e) {
         input = error_string + "Please enter a valid number. Your number may include decimals but not letters.";

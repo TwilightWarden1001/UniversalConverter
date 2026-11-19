@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 // Destructor
 MainWindow::~MainWindow() {}
 
-QWidget* MainWindow::CreateTab(string tableName, string tabType) {
+QWidget* MainWindow::CreateTab(std::string tableName, std::string tabType) {
     // 1. Create the tab
     QWidget *tab = new QWidget;
         
