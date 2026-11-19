@@ -1,31 +1,26 @@
 #include "mainwindow.h"
 #include "convertermiddleman.h"
 #include <QMessageBox>
-#include <QFile>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
-#include <QStringList> 
 #include <string>
-using namespace std;
 
 // Constructor
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) 
-{
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // 1. Initialize the parent widget (QWidget)
     parentTabWidget = new QTabWidget();
     unitTabs = new QTabWidget();
-    fileTabs = new QTabWidget(); 
+    fileTabs = new QTabWidget();
+    // settingsTab
     parentTabWidget->addTab(unitTabs, "Units");
     parentTabWidget->addTab(fileTabs, "Files");
-    // Settings tab.
+    // parentTabWidget->addTab(settingsTab, "Settings");
 
     // 2. Create the Database Connection
     units_DB_connection = QSqlDatabase::addDatabase("QSQLITE");
     units_DB_connection.setDatabaseName("units.db");
-    if (units_DB_connection.open() == true) {
-        qDebug() << "Database is connected";
-    } else {
+    if (units_DB_connection.open() == false) {
         qDebug() << units_DB_connection.lastError().text();
     }
 
@@ -41,10 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 // Destructor
 MainWindow::~MainWindow() {}
 
-
-
-QWidget* MainWindow::CreateTab(string tableName, string tabType) 
-{
+QWidget* MainWindow::CreateTab(string tableName, string tabType) {
     // 1. Create the tab
     QWidget *tab = new QWidget;
         
@@ -74,7 +66,6 @@ QWidget* MainWindow::CreateTab(string tableName, string tabType)
     QSqlQuery readUnits(units_DB_connection);
     if (readUnits.exec(queryText)) {
         while (readUnits.next()) {
-            qDebug() << readUnits.value(0) << readUnits.value(1) << readUnits.value(2);
             QString unit = readUnits.value("name").toString();
             unit1->addItem(unit);
             unit2->addItem(unit);
@@ -98,7 +89,6 @@ QWidget* MainWindow::CreateTab(string tableName, string tabType)
     tab->setLayout(mainLayout);
 
     // 7. Connect the button and return the tab
-
     if (tabType == "Unit") {
         connect(convertButton, &QPushButton::clicked, this, &MainWindow::onUnitButtonClicked);
     } else {
@@ -108,28 +98,25 @@ QWidget* MainWindow::CreateTab(string tableName, string tabType)
 }
 
 void MainWindow::onFileButtonClicked() {
-    qDebug() << "File Convert Button Clicked";
     return;
 }
 
-void MainWindow::onUnitButtonClicked() {   
-    qDebug() << "Unit Convert Button Clicked";
-
+void MainWindow::onUnitButtonClicked() {
     // 1. Get the current tabs index, name and widget
     int index = unitTabs->currentIndex();
     QString tabName = unitTabs->tabText(index);
     QWidget* tab = unitTabs->widget(index);
 
     // 2. Get the text from the two combo boxes and the user input
-    QString input = unitTabs->findChild<QLineEdit*>("userInput")->text();
-    QString fromUnit = unitTabs->findChild<QComboBox*>("fromBox")->currentText();
-    QString toUnit = unitTabs->findChild<QComboBox*>("toBox")->currentText();
+    QString input = tab->findChild<QLineEdit*>("userInput")->text();
+    QString fromUnit = tab->findChild<QComboBox*>("fromBox")->currentText();
+    QString toUnit = tab->findChild<QComboBox*>("toBox")->currentText();
 
     // 3. Convert the QStrings to normal strings
-    string tabString = tabName.toStdString();
-    string inputString = input.toStdString();
-    string fromString = fromUnit.toStdString();
-    string toString = toUnit.toStdString();
+    std::string tabString = tabName.toStdString();
+    std::string inputString = input.toStdString();
+    std::string fromString = fromUnit.toStdString();
+    std::string toString = toUnit.toStdString();
 
     // 4. Get the result widget for later
     QLineEdit* result = tab->findChild<QLineEdit*>("result");
@@ -144,7 +131,7 @@ void MainWindow::onUnitButtonClicked() {
     ConverterMiddleman router;
     
     // 6. Call our router
-    string text = router.route(tabString, inputString, fromString, toString);
+    std::string text = router.route(tabString, inputString, fromString, toString);
 
     // Basic error handling
     if (text.substr(0, 6) == "ERROR:") {

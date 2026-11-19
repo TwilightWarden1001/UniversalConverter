@@ -1,13 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include <QTabWidget>
 #include <QComboBox>
 #include <QLineEdit>
-#include <QLabel>
 #include <QPushButton>
-#include <QMap>
 #include <QString>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
